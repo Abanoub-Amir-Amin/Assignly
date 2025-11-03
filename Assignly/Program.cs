@@ -1,3 +1,6 @@
+using Assignly.Infrastructure;
+using Assignly.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Assignly
 {
@@ -10,8 +13,15 @@ namespace Assignly
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
             builder.Services.AddOpenApi();
+
+            builder.Services.AddDbContext<AppDBContext>(op =>
+                op.UseSqlServer(builder.Configuration.GetConnectionString("AssignlyDB")));
+
+            //builder.Services.AddScoped<IGenericRepository, GenericRepository>();
+
+            builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
@@ -20,11 +30,13 @@ namespace Assignly
             {
                 app.MapOpenApi();
             }
-
+            
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.MapControllers();
 
