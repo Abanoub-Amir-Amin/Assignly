@@ -1,7 +1,7 @@
 # Assignly - Task Management System (Backend)
 
-![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)
-![C#](https://img.shields.io/badge/C%23-12.0-239120?logo=csharp)
+![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)
+![C#](https://img.shields.io/badge/C%23-13.0-239120?logo=csharp)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 **Assignly** is a comprehensive task management system built with **.NET** (backend) and **Angular** (frontend). It provides powerful features for organizing teams, managing tasks, and tracking progress with real-time collaboration capabilities.
