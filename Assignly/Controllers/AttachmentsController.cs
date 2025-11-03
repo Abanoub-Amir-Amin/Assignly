@@ -125,7 +125,7 @@ namespace Assignly.API.Controllers
             return NoContent();
         }
 
-        public AttachmentResponseDto MapToDto(Attachment attachment)
+        private AttachmentResponseDto MapToDto(Attachment attachment)
         {
             return new AttachmentResponseDto
             {
