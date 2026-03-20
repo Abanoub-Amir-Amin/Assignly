@@ -13,8 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Assignly.Data\Assignly.Data.csproj" />
-    <ProjectReference Include="..\Assignly.Infrastructure\Assignly.Infrastructure.csproj" />
-    <ProjectReference Include="..\Assignly.Service\Assignly.Service.csproj" />
   </ItemGroup>
 
 </Project>

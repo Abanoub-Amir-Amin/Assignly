@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Assignly.Infrastructure.Repositories
 {
-    public interface IGenericRepository<T> where T : class
+    public interface IGenericRepository<T>
+        where T : class
     {
         Task<T> GetById(Guid id);
         Task<IEnumerable<T>> GetAll();
         Task Add(T entity);
         void Update(T entity);
         void Delete(Guid id);
-        Task SaveChanges();
-
+        Task SaveChangesAsync();
     }
 }

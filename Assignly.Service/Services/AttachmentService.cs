@@ -1,6 +1,7 @@
 ﻿using Assignly.Data.Enums;
 using Assignly.Data.Models;
 using Assignly.Infrastructure;
+using Assignly.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -8,12 +9,12 @@ namespace Assignly.Service.Services
 {
     public class AttachmentService : IAttachmentService
     {
-        private readonly AppDBContext _context;
+        private readonly IAttachmentRepository _repo;
         private readonly string _uploadsPath;
 
-        public AttachmentService(AppDBContext context, IConfiguration config)
+        public AttachmentService(IConfiguration config, IAttachmentRepository repo)
         {
-            _context = context;
+            _repo = repo;
             var uploadsPath =
                 config["FileStorage:UploadPath"]
                 ?? throw new InvalidOperationException(
@@ -68,8 +69,8 @@ namespace Assignly.Service.Services
             // saving file in DB
             attachment.FilePath = filePath;
 
-            _context.Attachments.Add(attachment);
-            await _context.SaveChangesAsync();
+            await _repo.Add(attachment);
+            await _repo.SaveChangesAsync();
 
             return attachment;
         }
@@ -102,14 +103,14 @@ namespace Assignly.Service.Services
                 UploadedAt = DateTime.UtcNow,
             };
 
-            _context.Attachments.Add(attachment);
-            await _context.SaveChangesAsync();
+            await _repo.Add(attachment);
+            await _repo.SaveChangesAsync();
             return attachment;
         }
 
         public async Task<bool> DeleteAttachmentByIdAsync(Guid attachmentId)
         {
-            var attachment = await _context.Attachments.FindAsync(attachmentId);
+            var attachment = await _repo.GetById(attachmentId);
             if (attachment == null)
             {
                 return false;
@@ -124,37 +125,31 @@ namespace Assignly.Service.Services
                 File.Delete(attachment.FilePath);
             }
             //delete file/link from DB.
-            _context.Attachments.Remove(attachment);
-            await _context.SaveChangesAsync();
+            _repo.Delete(attachment.Id);
+            await _repo.SaveChangesAsync();
             return true;
         }
 
         public async Task<Attachment?> GetAttachmentByIdAsync(Guid attachmentId)
         {
-            return await _context.Attachments.FindAsync(attachmentId);
+            return await _repo.GetById(attachmentId);
         }
 
         public async Task<List<Attachment>> GetAttachmentsByCommentIdAsync(Guid commentId)
         {
-            return await _context
-                .Attachments.Where(a => a.CommentId == commentId)
-                .OrderByDescending(a => a.UploadedAt)
-                .ToListAsync();
+            return await _repo.GetAttachmentsByCommentIdAsync(commentId);
         }
 
         public async Task<List<Attachment>> GetAttachmentsByTaskIdAsync(Guid taskId)
         {
-            return await _context
-                .Attachments.Where(a => a.TaskId == taskId)
-                .OrderByDescending(a => a.UploadedAt)
-                .ToListAsync();
+            return await _repo.GetAttachmentsByTaskIdAsync(taskId);
         }
 
         public async Task<(byte[] fileData, string fileName, string contentType)?> GetFileDataAsync(
             Guid attachmentId
         )
         {
-            var attachment = await _context.Attachments.FindAsync(attachmentId);
+            var attachment = await _repo.GetById(attachmentId);
 
             if (
                 attachment == null

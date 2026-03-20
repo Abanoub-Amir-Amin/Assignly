@@ -1,4 +1,4 @@
-﻿using Assignly.Core.DTOs;
+﻿using Assignly.Core.DTOs.AttachmentDTOs;
 using Assignly.Data.Enums;
 using Assignly.Data.Models;
 using Assignly.Service.Services;
@@ -84,7 +84,7 @@ namespace Assignly.API.Controllers
         }
 
         [HttpGet("download/{id}")]
-        public async Task<IActionResult> Download(Guid id)
+        public async Task<IActionResult> DownloadAttachment(Guid id)
         {
             var attachment = await _attachmentService.GetFileDataAsync(id);
             if (attachment == null)
