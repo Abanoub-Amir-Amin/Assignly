@@ -10,6 +10,7 @@ public static class ServicesDI
         services.AddScoped<IAttachmentService, AttachmentService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddSingleton<ITokenService, TokenService>();
+        services.AddSingleton<IEmailService, EmailService>();
 
         return services;
     }

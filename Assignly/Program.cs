@@ -3,9 +3,11 @@ using Assignly.Data.Enums;
 using Assignly.Data.Models;
 using Assignly.Infrastructure;
 using Assignly.Service;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Assignly
@@ -21,6 +23,23 @@ namespace Assignly
             builder.Services.AddControllers();
 
             builder.Services.AddOpenApi();
+
+            builder
+                .Services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                })
+                .AddCookie()
+                .AddGoogle(
+                    "Google",
+                    options =>
+                    {
+                        options.ClientId = builder.Configuration["GoogleCredintials:ClientId"];
+                        options.ClientSecret = builder.Configuration[
+                            "GoogleCredintials:ClientSecret"
+                        ];
+                    }
+                );
 
             builder.Services.AddDbContext<AppDBContext>(op =>
                 op.UseSqlServer(builder.Configuration.GetConnectionString("AssignlyDB"))
