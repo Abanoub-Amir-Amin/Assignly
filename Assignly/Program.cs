@@ -84,6 +84,14 @@ namespace Assignly
 
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    "AllowAll",
+                    policy => policy.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()
+                );
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -99,7 +107,7 @@ namespace Assignly
                 await SeedRoles(roleManager);
             }
             //app.UseHttpsRedirection();
-
+            app.UseCors("AllowAll");
             app.UseAuthorization();
 
             app.UseSwagger();

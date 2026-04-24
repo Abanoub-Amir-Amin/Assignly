@@ -69,5 +69,29 @@ namespace Assignly.API.Controllers
 
             return Redirect("/weatherforecast?page=1&pageSize=5");
         }
+
+        [HttpGet("confirm-email")]
+        public async Task<IActionResult> ConfirmEmailAsync([FromQuery] string token)
+        {
+            var respone = await _authService.ConfirmEmailAsync(token);
+            return StatusCode(respone.StatusCode, respone);
+        }
+
+        [HttpGet("forget-password")]
+        public async Task<IActionResult> ForgetPasswordAsync([FromQuery] string email)
+        {
+            var respone = await _authService.ForgetPasswordAsync(email);
+            return StatusCode(respone.StatusCode, respone);
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPasswordAsync(
+            [FromQuery] string token,
+            [FromBody] string newPassword
+        )
+        {
+            var respone = await _authService.ResetPasswordAsync(token, newPassword);
+            return StatusCode(respone.StatusCode, respone);
+        }
     }
 }
