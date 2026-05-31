@@ -92,6 +92,11 @@ namespace Assignly
                 );
             });
 
+            builder.Services.AddAutoMapper(config =>
+            {
+                config.AddMaps(typeof(Core.AppProfiler).Assembly);
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

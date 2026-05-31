@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignly.API", "Assignly\As
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignly.Core", "Assignly.Core\Assignly.Core.csproj", "{D8B57F86-4FDE-44E8-9932-6CF6DD72B479}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignly.Service", "Assignly.Service\Assignly.Service.csproj", "{B13E8589-5F0C-4693-847D-3F422B5AF2CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignly.Services", "Assignly.Service\Assignly.Services.csproj", "{B13E8589-5F0C-4693-847D-3F422B5AF2CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignly.Infrastructure", "Assignly.Infrastructure\Assignly.Infrastructure.csproj", "{9DDEAD52-B92D-498A-AC6D-7714CF5A6A7A}"
 EndProject

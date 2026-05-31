@@ -21,5 +21,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Assignly.Core\Assignly.Core.csproj" />
     <ProjectReference Include="..\Assignly.Service\Assignly.Service.csproj" />
+    <ProjectReference Include="..\Assignly.Service\Assignly.Services.csproj" />
   </ItemGroup>
 </Project>
