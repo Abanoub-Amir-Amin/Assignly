@@ -85,12 +85,9 @@ namespace Assignly.API.Controllers
         }
 
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPasswordAsync(
-            [FromQuery] string token,
-            [FromBody] string newPassword
-        )
+        public async Task<IActionResult> ResetPasswordAsync(ResetPasswordRequest request)
         {
-            var respone = await _authService.ResetPasswordAsync(token, newPassword);
+            var respone = await _authService.ResetPasswordAsync(request);
             return StatusCode(respone.StatusCode, respone);
         }
     }

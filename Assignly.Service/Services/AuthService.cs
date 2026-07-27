@@ -127,19 +127,19 @@ public class AuthService(
         return Result<string>.Success("Password Reset link was sent to your email.");
     }
 
-    public async Task<Result<string>> ResetPasswordAsync(string token, string newPassword)
+    public async Task<Result<string>> ResetPasswordAsync(ResetPasswordRequest request)
     {
-        if (string.IsNullOrEmpty(newPassword))
+        if (string.IsNullOrEmpty(request.NewPassword))
         { //TODO: Add password regex matcher.
             return Result<string>.Failure("Password is required.", 400);
         }
-        var claims = _tokenService.ValidateToken(token);
+        var claims = _tokenService.ValidateToken(request.Token);
         var email = claims.Claims.Where(c => c.Type == "Email").FirstOrDefault().Value;
         var user = await _userManager.FindByEmailAsync(email);
         if (user == null)
             return Result<string>.Failure("User not found.", 404);
 
-        var newPasswordHashed = _passwordHasher.HashPassword(user, newPassword);
+        var newPasswordHashed = _passwordHasher.HashPassword(user, request.NewPassword);
         user.PasswordHash = newPasswordHashed;
         var result = await _userManager.UpdateAsync(user);
         if (!result.Succeeded)
